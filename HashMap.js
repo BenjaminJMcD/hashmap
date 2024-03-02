@@ -6,19 +6,13 @@
 
 let buckets = new Array(16);
 
-
-
 // KEY = FRED, VALUE = SMITH. KEY --> HASHCODE == INDEX OF BUCKET. BUCKET == LINKED LIST W KEY AND VALUE
 
 // ALL KEYS MUST BE UNIQUE ---  CANT HAVE TWO PEOPLE NAMED JOHN --- OVERWRITE VAL IF NEW JOHN
 
 // FUNCTION ABOVE SHOULD FIV COLLISIONS
 
-console.log(buckets[0])
-
 class HashMap {
-
-
 
 hash(key) {
     let hashCode = 0;
@@ -31,36 +25,27 @@ hash(key) {
 
 set(key, value) {
 
-    // get hash from key
     let bucketIndex = this.hash(key);
-    // check if hash index is empty --- 
+
     if (buckets[bucketIndex]) {
-        console.log("CHAMS");
         let oldLL = buckets[bucketIndex];
         let alreadyExists = oldLL.contains(key);
         let oldIndex = oldLL.find(key);
         if (alreadyExists) {
             oldLL.removeAt(oldIndex);
+            oldLL.append(key, value);
+            return oldLL
         }
-        oldLL.append(key, value);
-        
-        //oldLL.append(key, value);
+        else {
+            oldLL.append(key, value);
+            return oldLL;
+        }
     }
     else {
-        console.log("Nah");
         let newLL = new LinkedList;
         newLL.append(key, value);
         buckets[bucketIndex] = newLL;
     }
-        //YES = create new LL , append newNode, add to bucketIndex
-        //NO ---
-            // check if key exists .contains(key) ---
-                // YES = find index .find(key)---
-                    // .removeAt(index) ---
-                    // .append newNode
-                // NO = .append newNode
-
-
 }
 
 get(key) {
@@ -187,6 +172,13 @@ pop() {
     }
 }
 
+shift() {
+    this.length--;
+    let node = this.head.next;
+    this.head = node;
+
+}
+
 contains(key) {
     let check = false
     let node = this.head;
@@ -246,9 +238,9 @@ removeAt(index) {
     if (index > this.length) {
         throw new Error("Remove index out of bounds");
     }
-    else if (this.length == 1) {
-        this.pop();
-        this.length--;
+    else if (index == 0) {
+        console.log("length = 1")
+        return this.shift();
     }
     else {
         let previousNode = null;
@@ -257,17 +249,17 @@ removeAt(index) {
             previousNode = currentNode;
             currentNode = currentNode.next;
         }
-    previousNode.next = currentNode.next;
-    this.length--
+        previousNode.next = currentNode.next;
+        this.length--
     }
-
 }
 
 }
 
 const map = new HashMap;
 
-map.set("first", "Done");
-console.log(buckets)
-map.set("first", "chillroy");
+map.set("Wans", "Tamps");
+map.set("tyypnouuuttttttyeeedtup", "wer");
+
+
 console.log(buckets)
