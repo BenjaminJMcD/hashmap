@@ -1,21 +1,22 @@
 
-function createNode(value) {
+export function createNode(key, value) {
     return {
+        key: key,
         value: value,
         next: null,
     };
 }
 
-class LinkedList {
+export class LinkedList {
     constructor() {
         this.head = null;
         this.tail = null;
         this.length = 0;
     }
 
-append(value) {
+append(key, value) {
     this.length++
-    let newNode = createNode(value);
+    let newNode = createNode(key, value);
 
     if (this.tail) {
         this.tail.next = newNode;
@@ -26,9 +27,9 @@ append(value) {
     return newNode;
 }
 
-prepend(value) {
+prepend(key, value) {
     this.length++
-    let newNode = createNode(value);
+    let newNode = createNode(key, value);
 
     if (this.head) {
         newNode.next = this.head;
@@ -81,25 +82,25 @@ pop() {
     }
 }
 
-contains(value) {
+contains(key) {
     let check = false
     let node = this.head;
 
     while (node) {
-        if (node.value == value) {
+        if (node.key == key) {
             check = true;
-            return console.log(check);
+            return check;
         }
         node = node.next
     }
-    return console.log(check)
+    return check;
 }
 
-find(value) {
+find(key) {
     let index = 0;
     let node = this.head;
     while (node) {
-        if (node.value == value) {
+        if (node.key == key) {
             return index;
         }
         node = node.next;
@@ -119,21 +120,21 @@ toString() {
 insertAt(value, index) {
     if (index > this.length) {
         throw new Error("Insert index out of bounds");
-      }
-      if (index === 0) {
+    }
+    if (index === 0) {
         return this.prepend(value);
-      }
-      let previousNode = null;
-      let currentNode = this.head;
-      for (let i=0; i<index; i++) {
+    }
+    let previousNode = null;
+    let currentNode = this.head;
+    for (let i=0; i<index; i++) {
         previousNode = currentNode;
         currentNode = currentNode.next;
-      }
-      const newNode = createNode(value);
-      newNode.next = currentNode;
-      previousNode.next = newNode;
-      this.length++;
-      return newNode;
+    }
+    const newNode = createNode(value);
+    newNode.next = currentNode;
+    previousNode.next = newNode;
+    this.length++;
+    return newNode;
 }
 
 removeAt(index) {
