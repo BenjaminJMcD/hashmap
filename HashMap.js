@@ -30,7 +30,7 @@ set(key, value) {
     if (buckets[bucketIndex]) {
         let oldLL = buckets[bucketIndex];
         let alreadyExists = oldLL.contains(key);
-        let oldIndex = oldLL.find(key);
+        let oldIndex = oldLL.findIndex(key);
         if (alreadyExists) {
             oldLL.removeAt(oldIndex);
             oldLL.append(key, value);
@@ -56,7 +56,7 @@ get(key) {
     if (buckets[index]) {
         let list = buckets[index];
         if (list.contains(key)) {
-            let node = list.find(key);
+            let node = list.findNode(key);
             return node.value;
         }
         else {
@@ -89,6 +89,27 @@ remove(key) {
     // REMOVES NODE
     // RETURNS TRUE
     // IF DOESNT EXIST RETURNS FALSE
+
+    let index = hash(key);
+
+    if (buckets[index]) {
+        let list = buckets[index];
+        if (list.contains(key)) {
+            let listIndex = list.findIndex(key);
+            list.removeAt(listIndex);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    else {
+        return false;
+    }
+
+
+
+
 }
 
 length() {
@@ -219,12 +240,24 @@ contains(key) {
     return check;
 }
 
-find(key) {
+findNode(key) {
     let index = 0;
     let node = this.head;
     while (node) {
         if (node.key == key) {
             return node;
+        }
+        node = node.next;
+        index++;
+    }
+}
+
+findIndex(key) {
+    let index = 0;
+    let node = this.head;
+    while (node) {
+        if (node.key == key) {
+            return index;
         }
         node = node.next;
         index++;
@@ -265,7 +298,6 @@ removeAt(index) {
         throw new Error("Remove index out of bounds");
     }
     else if (index == 0) {
-        console.log("length = 1")
         return this.shift();
     }
     else {
@@ -287,7 +319,6 @@ const map = new HashMap;
 map.set("Wans", "Tamps");
 map.set("tyypnouuuttttttyeeedtup", "wer");
 
-console.log(map.get("pans"));
-console.log(map.get("wkjkjkans"));
-
 console.log(buckets)
+
+
