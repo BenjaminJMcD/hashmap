@@ -53,10 +53,15 @@ get(key) {
     // IF NOT FOUND RETURNS NULL
 
     let index = hash(key);
-    let list = buckets[index];
-    let node = list.find(key);
-    if (node != undefined) {
-        return node.value;
+    if (buckets[index]) {
+        let list = buckets[index];
+        if (list.contains(key)) {
+            let node = list.find(key);
+            return node.value;
+        }
+        else {
+            return null;
+        }
     }
     else {
         return null;
@@ -67,6 +72,16 @@ get(key) {
 has(key) {
     // RETURNS TRUE IF EXISTS
     // RETURNS FALSE IF DOESNT
+
+    let index = hash(key);
+    if (buckets[index]) {
+        let list = buckets[index];
+        return list.contains(key);
+    }
+    else {
+        return false;
+    }
+
 }
 
 remove(key) {
@@ -271,5 +286,8 @@ const map = new HashMap;
 
 map.set("Wans", "Tamps");
 map.set("tyypnouuuttttttyeeedtup", "wer");
+
+console.log(map.get("pans"));
+console.log(map.get("wkjkjkans"));
 
 console.log(buckets)
