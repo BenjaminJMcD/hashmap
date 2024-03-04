@@ -11,10 +11,7 @@ let buckets = new Array(16);
 // ALL KEYS MUST BE UNIQUE ---  CANT HAVE TWO PEOPLE NAMED JOHN --- OVERWRITE VAL IF NEW JOHN
 
 // FUNCTION ABOVE SHOULD FIV COLLISIONS
-
-class HashMap {
-
-hash(key) {
+function hash(key) {
     let hashCode = 0;
     const primeNumber = 31;
     for (let i = 0; i < key.length; i++) {
@@ -23,9 +20,12 @@ hash(key) {
     return hashCode
 }
 
+class HashMap {
+
+
 set(key, value) {
 
-    let bucketIndex = this.hash(key);
+    let bucketIndex = hash(key);
 
     if (buckets[bucketIndex]) {
         let oldLL = buckets[bucketIndex];
@@ -51,6 +51,17 @@ set(key, value) {
 get(key) {
     // RETURNS VALUE
     // IF NOT FOUND RETURNS NULL
+
+    let index = hash(key);
+    let list = buckets[index];
+    let node = list.find(key);
+    if (node != undefined) {
+        return node.value;
+    }
+    else {
+        return null;
+    }
+
 }
 
 has(key) {
@@ -198,7 +209,7 @@ find(key) {
     let node = this.head;
     while (node) {
         if (node.key == key) {
-            return index;
+            return node;
         }
         node = node.next;
         index++;
@@ -260,6 +271,5 @@ const map = new HashMap;
 
 map.set("Wans", "Tamps");
 map.set("tyypnouuuttttttyeeedtup", "wer");
-
 
 console.log(buckets)
