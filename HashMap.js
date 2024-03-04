@@ -114,6 +114,14 @@ remove(key) {
 
 length() {
     // RETURNS NUMBER OF NODES IN ALL BUCKETS COMBINED
+
+    let count = 0;
+    for (let i=0; i<buckets.length; i++) {
+        if (buckets[i]) {
+            count += buckets[i].size();
+        }
+    }
+    return count;
 }
 
 clear() {
@@ -318,6 +326,11 @@ const map = new HashMap;
 
 map.set("Wans", "Tamps");
 map.set("tyypnouuuttttttyeeedtup", "wer");
+map.set("ert", "werew");
+map.set("sdfsdfdsf", "sadfds");
+map.set("Sdfsdfddd", "asdf");
+map.set("ef", "df");
+
 
 console.log(buckets)
 
