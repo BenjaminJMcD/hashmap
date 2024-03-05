@@ -1,10 +1,18 @@
 
 
-// if (index < 0 || index >= buckets.length) {
-//  throw new Error("Trying to access index out of bound");
-//}
-
 let buckets = new Array(16);
+
+// let loadFactor = 0.75;
+
+// function growBuckets() {
+//     for (i=0; i<buckets.length; i++) {
+//         if (buckets[i]) {
+//             if (buckets[i].size() > buckets.length * loadFactor) {
+//                 // ADJUST BUCKETS 
+//             }
+//         }
+//     }
+// }
 
 
 function hash(key) {
@@ -16,10 +24,13 @@ function hash(key) {
     return hashCode
 }
 
+
+
 class HashMap {
 
-
 set(key, value) {
+
+    // BUCKET GROWTH LOGIC
 
     let bucketIndex = hash(key);
 
@@ -164,7 +175,7 @@ entries() {
         pairsArray.push(singlePairs);
     }
     
-    return console.log(pairsArray)
+    return pairsArray;
 }
 
 }
@@ -325,6 +336,13 @@ map.set("ef", "df");
 
 
 console.log(buckets)
-map.keys();
-map.values();
-map.entries();
+console.log(map.keys());
+console.log(map.values());
+console.log(map.entries());
+console.log(map.get("Wans"));
+console.log(map.has("ert"));
+console.log(map.length());
+map.remove("ef");
+console.log(map.keys());
+map.clear();
+console.log(buckets);
