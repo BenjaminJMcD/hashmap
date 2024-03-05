@@ -6,11 +6,7 @@
 
 let buckets = new Array(16);
 
-// KEY = FRED, VALUE = SMITH. KEY --> HASHCODE == INDEX OF BUCKET. BUCKET == LINKED LIST W KEY AND VALUE
 
-// ALL KEYS MUST BE UNIQUE ---  CANT HAVE TWO PEOPLE NAMED JOHN --- OVERWRITE VAL IF NEW JOHN
-
-// FUNCTION ABOVE SHOULD FIV COLLISIONS
 function hash(key) {
     let hashCode = 0;
     const primeNumber = 31;
@@ -106,10 +102,6 @@ remove(key) {
     else {
         return false;
     }
-
-
-
-
 }
 
 length() {
@@ -126,18 +118,53 @@ length() {
 
 clear() {
     // REMOVES ALL NODES IN ALL BUCKETS
+
+    let newBuckets = new Array(16);
+    buckets = newBuckets;
 }
 
 keys() {
     // RETURNS ARRAY OF ALL KEYS
+
+    let keyArray = [];
+    for (let i=0; i<buckets.length; i++) {
+        if (buckets[i]) {
+            let list = buckets[i];
+            keyArray.push(list.getKeys());
+        }
+    }
+    return keyArray.flat();
+
 }
 
 values() {
     // RETURNS ARRAY OF ALL VALUES
+
+    let valueArray = [];
+    for (let i=0; i<buckets.length; i++) {
+        if (buckets[i]) {
+            let list = buckets[i];
+            valueArray.push(list.getValues());
+        }
+    }
+    return valueArray.flat();
 }
 
 entries() {
-    // RETURNS ARRAY OF ALL KEY-VALUE PAIRS
+    // RETURNS ARRAY OF ALL KEY-VALUE PAIRS [[key, value], [key, value], etc]
+
+    let keysArray = this.keys();
+    let valuesArray = this.values();
+    let pairsArray = [];
+
+    for (let i=0; i<keysArray.length; i++) {
+        let singlePairs = [];
+        singlePairs.push(keysArray[i]);
+        singlePairs.push(valuesArray[i]);
+        pairsArray.push(singlePairs);
+    }
+    
+    return console.log(pairsArray)
 }
 
 }
@@ -189,32 +216,6 @@ size() {
     return this.length;
 }
 
-printHead() {
-    return this.head.value;
-}
-
-printTail() {
-    return this.tail.value;
-}
-
-at(index) {
-    if (index == 0) {
-        return this.head.value;
-    }
-    else if (index >= this.length) {
-        throw new Error("Beyond List Length");
-    }
-    let node = this.head;
-    let place = 0;
-    while (node) {
-        if (place == index) {
-            return node.value
-        }
-        node = node.next;
-        place++;
-    }
-}
-
 pop() {
     this.length--;
     let node = this.head;
@@ -249,14 +250,12 @@ contains(key) {
 }
 
 findNode(key) {
-    let index = 0;
     let node = this.head;
     while (node) {
         if (node.key == key) {
             return node;
         }
         node = node.next;
-        index++;
     }
 }
 
@@ -272,33 +271,26 @@ findIndex(key) {
     }
 }
 
-toString() {
+getKeys() {
     let node = this.head;
-    while (node) {
-        console.log(`( ${node.value} ) ->`)
-        node = node.next;
+    let keyArray= [];
+    while(node) {
+        let key = node.key;
+        keyArray.push(key);
+        node = node.next
     }
-    console.log("null")
+    return keyArray
 }
 
-insertAt(value, index) {
-    if (index > this.length) {
-        throw new Error("Insert index out of bounds");
-      }
-      if (index === 0) {
-        return this.prepend(value);
-      }
-      let previousNode = null;
-      let currentNode = this.head;
-      for (let i=0; i<index; i++) {
-        previousNode = currentNode;
-        currentNode = currentNode.next;
-      }
-      const newNode = createNode(value);
-      newNode.next = currentNode;
-      previousNode.next = newNode;
-      this.length++;
-      return newNode;
+getValues() {
+    let node = this.head;
+    let valueArray = [];
+    while (node) {
+        let value = node.value;
+        valueArray.push(value);
+        node = node.next;
+    }
+    return valueArray;
 }
 
 removeAt(index) {
@@ -333,5 +325,6 @@ map.set("ef", "df");
 
 
 console.log(buckets)
-
-
+map.keys();
+map.values();
+map.entries();
